@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="fw-bold"><i class="fas fa-star text-warning"></i> Saved Favorites</h2>
+    </div>
+</div>
+
+<div class="row">
+    {% for item in favorites %}
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100 shadow-sm border-0 border-start border-warning border-4 history-card">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center border-bottom pb-2 pt-3">
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-primary rounded-pill me-2">{{ item.source_language|upper }}</span>
+                    <i class="fas fa-long-arrow-alt-right text-muted mx-2"></i>
+                    <span class="badge bg-success rounded-pill">{{ item.target_language|upper }}</span>
+                </div>
+                <button class="btn btn-sm btn-icon fav-toggle-btn text-warning" data-id="{{ item.id }}">
+                    <i class="fas fa-star fa-lg"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6 class="text-muted small text-uppercase fw-bold">Source</h6>
+                    <p class="mb-0 fs-6">{{ item.original_text }}</p>
+                </div>
+                <div>
+                    <h6 class="text-muted small text-uppercase fw-bold">Translation</h6>
+                    <p class="mb-0 fs-6 target-preview">{{ item.translated_text }}</p>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center pb-3">
+                <small class="text-muted"><i class="far fa-clock"></i> {{ item.created_at|date:"M d, Y" }}</small>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-light copy-history-btn" title="Copy Translation" data-text="{{ item.translated_text }}"><i class="fas fa-copy"></i></button>
+                    <a href="{% url 'export_translation' item.id 'txt' %}" class="btn btn-sm btn-light" title="Export as TXT">TXT</a>
+                    <a href="{% url 'export_translation' item.id 'pdf' %}" class="btn btn-sm btn-light" title="Export as PDF">PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center mt-5">
+        <div class="text-muted">
+            <i class="far fa-star fa-3x mb-3 opacity-50"></i>
+            <h4>No Favorites Yet</h4>
+            <p>Click the star icon on any translation to save it here.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

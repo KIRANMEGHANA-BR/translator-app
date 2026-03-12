@@ -1,0 +1,4 @@
+Django>=4.2,<5.0
+deep-translator
+xhtml2pdf
+reportlab

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-12 text-center mb-4">
+        <h2 class="fw-bold">Global Translate</h2>
+        <p class="text-muted">Fast, accurate text translation across multiple languages.</p>
+    </div>
+</div>
+
+<div class="row translation-container">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow border-0 h-100 translator-box">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                <select id="source-lang" class="form-select border-0 w-auto fw-bold lang-selector shadow-none text-uppercase">
+                    <option value="auto">Detect Language</option>
+                    {% for name, code in languages.items %}
+                    <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name|title }}</option>
+                    {% endfor %}
+                </select>
+                <button id="clear-btn" class="btn btn-sm btn-icon" title="Clear Text"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body p-0">
+                <textarea id="source-text" class="form-control border-0 p-3 shadow-none custom-textarea" rows="8" placeholder="Enter text to translate..."></textarea>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-muted small pb-2">
+                <span id="char-count">0</span> chars
+            </div>
+        </div>
+    </div>
+    
+    <!-- Switch button -->
+    <div class="d-md-none text-center mb-3">
+        <button id="swap-langs" class="btn btn-light shadow-sm rounded-circle p-3"><i class="fas fa-exchange-alt fa-rotate-90"></i></button>
+    </div>
+    <div class="col-md-6 mb-3 position-relative d-flex align-items-center justify-content-center">
+        <button id="swap-langs-desktop" class="btn btn-light shadow-sm rounded-circle p-3 position-absolute z-index-2 d-none d-md-block" style="left: -28px;"><i class="fas fa-exchange-alt"></i></button>
+        <div class="card shadow border-0 h-100 w-100 translator-box target-box">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center border-0">
+                <select id="target-lang" class="form-select border-0 bg-transparent w-auto fw-bold lang-selector shadow-none text-uppercase">
+                    {% for name, code in languages.items %}
+                    <option value="{{ code }}" {% if code == 'es' %}selected{% endif %}>{{ name|title }}</option>
+                    {% endfor %}
+                </select>
+                <div class="btn-group">
+                    <button id="copy-btn" class="btn btn-sm btn-icon" title="Copy Translation"><i class="fas fa-copy"></i></button>
+                    <button class="btn btn-sm btn-icon" id="share-btn" title="Share Translation"><i class="fas fa-share-alt"></i></button>
+                </div>
+            </div>
+            <div class="card-body p-0 position-relative">
+                <div id="loading-overlay" class="d-none position-absolute w-100 h-100 d-flex justify-content-center align-items-center bg-white bg-opacity-75" style="z-index: 5;">
+                    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+                </div>
+                <textarea id="target-text" class="form-control border-0 bg-transparent p-3 shadow-none custom-textarea" rows="8" placeholder="Translation will appear here..." readonly></textarea>
+            </div>
+            <div class="card-footer border-0 bg-transparent d-flex justify-content-between align-items-center pb-2">
+                <div class="export-actions d-none" id="export-actions">
+                    <button class="btn btn-sm btn-icon border export-btn" data-format="txt" title="Export to TXT">TXT</button>
+                    <button class="btn btn-sm btn-icon border export-btn" data-format="pdf" title="Export to PDF">PDF</button>
+                </div>
+                <button id="fav-btn" class="btn btn-sm btn-icon text-warning d-none" title="Save to Favorites"><i class="far fa-star fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <button id="translate-btn" class="btn btn-primary btn-lg px-5 shadow rounded-pill">
+            <i class="fas fa-language me-2"></i>Translate
+        </button>
+    </div>
+</div>
+{% endblock %}

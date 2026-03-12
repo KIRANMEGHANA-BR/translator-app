@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm border-0 mt-4 text-center p-4">
+            <h3>You have been logged out</h3>
+            <p class="text-muted mt-2">Thank you for using Global Translator.</p>
+            <div class="mt-4">
+                <a class="btn btn-outline-primary" href="{% url 'login' %}">Log In Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
